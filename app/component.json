@@ -1,0 +1,8 @@
+{
+  "name": "datafocus",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "~1.11.1",
+    "bootstrap": "~3.1.1"
+  }
+}
