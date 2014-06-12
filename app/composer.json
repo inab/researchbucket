@@ -1,0 +1,10 @@
+{
+	"config": {
+		"vendor-dir": "Vendor"
+	},
+	"require": {
+		 "josegonzalez/cakephp-upload": "1.0.0",
+		 "uzyn/cakephp-opauth": "*",
+	     "opauth/linkedin": "*"	 
+	}
+}
