@@ -70,8 +70,8 @@ Cache::config('default', array('engine' => 'File'));
  *
  */
  
- CakePlugin::load('Bower');
- CakePlugin::load('BoostCake');
+CakePlugin::loadAll();
+CakePlugin::load('Opauth', array('routes' => true, 'bootstrap' => true));
 
 /**
  * You can attach event listeners to the request lifecycle as Dispatcher Filter. By default CakePHP bundles two filters:
@@ -108,4 +108,11 @@ CakeLog::config('error', array(
 	'engine' => 'File',
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
+));
+Configure::write('Opauth.path', '/datafocus/auth/');
+
+Configure::write('Opauth.Strategy.LinkedIn', array(
+   'api_key' => '77aia77y6e0dik',
+   'secret_key' => 'u9hag421JnOt49b8',
+   'scope' => 'r_fullprofile r_emailaddress r_network rw_nus'
 ));

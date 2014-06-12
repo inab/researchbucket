@@ -21,6 +21,7 @@
 
 App::uses('Model', 'Model');
 
+
 /**
  * Application model for Cake.
  *
@@ -30,4 +31,19 @@ App::uses('Model', 'Model');
  * @package       app.Model
  */
 class AppModel extends Model {
+
+    public $actsAs = array('Containable');
+    
+    
+    public function formatOriginalName($name, $file)
+    {
+        return microtime();
+    }
+
+
+    public function formatName($name, $file)
+    {
+        debug('here');
+        return $this->getUploadedFile()->name();
+    }
 }
