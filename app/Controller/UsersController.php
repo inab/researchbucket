@@ -25,9 +25,8 @@ class UsersController extends AppController {
         	$this->Auth->login($user);
     	}else{
     	    $this->Session->setFlash('Some error ocurred');
-        	$this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
     	}
-    	
+        $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));	
     }
     
     public function login(){
