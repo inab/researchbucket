@@ -14,6 +14,12 @@ class UsersController extends AppController {
  * @var array
  */
 	public $components = array('Paginator');
+	
+	
+	public function opauth_complete(){
+    	debug($this->data);
+	}
+	
 
 /**
  * index method
