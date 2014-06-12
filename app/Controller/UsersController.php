@@ -18,7 +18,9 @@ class UsersController extends AppController {
 	
 	public function opauth_complete(){
     	
-    	if($this->User->linkedin_signin($this->data)){
+    	
+    	$user = $this->User->linkedin_signin($this->data);
+    	if($user){
         	$this->Auth->login($user);
     	}
     	
