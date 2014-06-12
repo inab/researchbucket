@@ -16,6 +16,7 @@ class ProjectsController extends AppController {
 	public $components = array('Paginator');
 	
 	public function beforeFilter(){
+	    parent::beforeFilter();
         $this->layout = 'bootstrap';
     }
 
@@ -24,6 +25,14 @@ class ProjectsController extends AppController {
  *
  * @return void
  */
+ 
+    public function index() {
+		$this->Project->recursive = -1;
+		$this->set('projects', $this->Paginator->paginate());
+	}
+ 
+ 
+ 
 	public function getlist() {
 	    $this->layout = 'ajax';
 		$this->Project->recursive = -1;
@@ -55,7 +64,7 @@ class ProjectsController extends AppController {
 			$this->Project->create();
 			if ($this->Project->save($this->request->data)) {
 				$this->Session->setFlash(__('The project has been saved.'), 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('controller'=>'pages','action' => 'projects'));
+				return $this->redirect(array('controller'=>'projects','action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The project could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 			}
@@ -74,9 +83,9 @@ class ProjectsController extends AppController {
 			throw new NotFoundException(__('Invalid project'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
-			if ($this->Project->save($this->request->data)) {
+			if ($this->Project->saveAll($this->request->data)) {
 				$this->Session->setFlash(__('The project has been saved.'), 'default', array('class' => 'alert alert-success'));
-				return $this->redirect(array('controller'=>'pages','action' => 'projects'));
+				return $this->redirect(array('controller'=>'projects','action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The project could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 			}

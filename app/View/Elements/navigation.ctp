@@ -22,7 +22,10 @@
                     <li><a title="Projects" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'projects'));?>"><?php echo __('Projects');?></a></li>
                     <li><a title="Datasets" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'datasets'));?>"><?php echo __('Datasets');?></a></li>
                     <li><a title="Results" href="#"><?php echo __('Results');?></a></li>
+                    <?php if($this->Session->read('Auth.User')):?>
+                    <?php else:?> 
                     <li><a class="btn btn-warning" href="/auth/linkedin"><i class="fa fa-linkedin-square"></i>&nbsp; Sign In with Linkedin</a></li>
+                    <?php endif;?>
                 </ul>
             </div>
         </nav>

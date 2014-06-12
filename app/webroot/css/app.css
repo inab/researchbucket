@@ -37,7 +37,15 @@ blockquote {
 .hairline {
 	font-weight:100!important;
 }
-
+.alert{
+    margin-bottom: 0px;
+}
+.tab-content{
+    background: #FFF!important;
+}
+.swatch-white-blue .tab-content{
+    border:1px solid #dbe7ed;
+}
 #masthead .navbar-brand {
 	padding:0;
 	line-height:90px;
