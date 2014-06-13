@@ -39,6 +39,7 @@
                                 <td><?php echo $this->Time->nice($p['Project']['created']);?></td>
                                 <td class="actions">
         							<?php echo $this->Html->link('<i class="fa fa-search"></i>', array('action' => 'view', $p['Project']['id']), array('escape' => false)); ?>
+        							<?php echo $this->Html->link('<i class="fa fa-cloud"></i>', array('controller'=>'datasets','action' => 'index','pid'=>$p['Project']['id']), array('escape' => false)); ?>
         							<?php echo $this->Html->link('<i class="fa fa-edit"></i>', array('action' => 'edit', $p['Project']['id']), array('escape' => false)); ?>
         							<?php echo $this->Form->postLink('<i class="fa fa-trash-o"></i>', array('action' => 'delete', $p['Project']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $p['Project']['id'])); ?>
         						</td>

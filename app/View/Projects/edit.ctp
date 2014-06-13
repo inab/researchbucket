@@ -74,8 +74,11 @@
                             echo $this->Form->hidden('Storage.'.$i.'.type',array('value'=>'data'));
                         ?>
                       </div>
-                      <div class="col-md-5">
+                      <div class="col-md-3">
                           <?php echo $this->Form->input('Storage.'.$i.'.url', array('type'=>'text','div'=>false,'label'=>false,'class' => 'form-control', 'placeholder' => 'Url'));?>
+                      </div>
+                      <div class="col-md-2">
+                          <?php echo $this->Form->input('Storage.'.$i.'.path', array('type'=>'text','div'=>false,'label'=>false,'class' => 'form-control', 'placeholder' => 'Base path'));?>
                       </div>
                       <div class="col-md-2">
                           <?php echo $this->Form->input('Storage.'.$i.'.username', array('div'=>false,'label'=>false,'class' => 'form-control', 'placeholder' => 'Username'));?>

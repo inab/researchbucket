@@ -20,7 +20,7 @@
                     <div class="row" style="margin-bottom:30px;">
                         <div class="col-md-6">
                             <div class="box-wrap"><div class="box-round box-medium"><div class="box-dummy"></div><span class="box-inner"><i class="fa fa-hdd-o animated" data-animation=""></i></span></div></div>
-                            <div class="counter underline" data-count="1389">
+                            <div class="counter underline" data-count="<?php echo count($project['Dataset']);?>">
                                    <span class="value super hairline odometer odometer-auto-theme"></span> 
                             </div>
                             <h3 class="text-center normal light no-bordered-header"><?php echo __('Datasets');?></h3>

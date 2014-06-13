@@ -21,10 +21,10 @@ class UsersController extends AppController {
     	
     	$user = $this->User->linkedin_signin($this->data);
     	if($user){
-    	    $this->Session->setFlash('You have successfully loged in');
+    	    $this->Session->setFlash('You have successfully logged in',array('class' => 'alert alert-success'));
         	$this->Auth->login($user);
     	}else{
-    	    $this->Session->setFlash('Some error ocurred');
+    	    $this->Session->setFlash('Some error occurred',array('class' => 'alert alert-error'));
     	}
         $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));	
     }

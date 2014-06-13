@@ -27,6 +27,7 @@ class Storage extends AppModel {
 	
 	public function scanFtpStorage($ftp_server,$base_path,$username=null,$password=null){
 	    
+	    
         $path           = '';
         $files          = array();
         $conn_id        = ftp_connect($ftp_server);
@@ -60,7 +61,7 @@ class Storage extends AppModel {
             }
         }
         ftp_close($conn_id);
-        debug($files);
+        return $files;
 	}
 	
 	
@@ -68,27 +69,10 @@ class Storage extends AppModel {
 	    
         $fileRecord = array();   
         $tmp = str_replace($base_path.'/','',$path);
-        $metadata = explode('/',$tmp);
 
         $fileRecord['date'] = $file[6] . ' ' . $file[5] . ' ' . $file[7];
         $fileRecord['name'] = $file[8];  
-        $fileRecord['path'] = $path;  
-        $fileRecord['tissue'] = $metadata[0];  
-        $fileRecord['sample'] = $metadata[1];  
-        $fileRecord['cell_type'] = $metadata[2];  
-        $fileRecord['exp_type'] = $metadata[3];  
-        
-        
-        $name = explode('.',$fileRecord['name']);
-        
-        if (preg_match('/\.gz/',$fileRecord['name'])){
-            $fileRecord['gz'] = true;
-            array_pop($name);
-        };
-        $fileRecord['ext'] =  array_pop($name);
-        
-        
-        
+        $fileRecord['path'] = $path;       
         
         return $fileRecord; 
     

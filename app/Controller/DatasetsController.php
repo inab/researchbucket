@@ -16,6 +16,7 @@ class DatasetsController extends AppController {
 	public $components = array('Paginator');
 	
 	public function beforeFilter(){
+	    parent::beforeFilter();
         $this->layout = 'bootstrap';
     }
 
@@ -25,8 +26,89 @@ class DatasetsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Dataset->recursive = 0;
-		$this->set('datasets', $this->Paginator->paginate());
+
+	    if (!$this->request->params['named']['pid'] || !$this->Dataset->Project->exists($this->request->params['named']['pid'])) {
+			throw new NotFoundException(__('Invalid project'));
+		}
+	
+	    $pid = $this->request->params['named']['pid'];
+	    $project = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
+		$this->set('project',$project);
+	}
+	
+	
+	
+	public function updateList(){
+	
+	    Controller::loadModel('Storage');
+	    if (!$this->request->params['named']['pid'] || !$this->Dataset->Project->exists($this->request->params['named']['pid'])) {
+			throw new NotFoundException(__('Invalid project'));
+		}
+		$pid = $this->request->params['named']['pid'];
+		
+		$project = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
+
+		
+		foreach ($project['Storage'] as $s){
+    	    if($s['url'] && $s['path'] && $s['username'] && $s['password']){
+    	    
+
+    	       $files = $this->Storage->scanFtpStorage($s['url'],$s['path'],$s['username'],$s['password']);
+        	   
+        	   
+        	   foreach($files as $f){
+            	   $record = $this->Dataset->annotateFile($f,$pid);
+            	   
+            	   $e_dataset = $this->Dataset->find('first',array('recursive'=>-1,'conditions'=>array('Dataset.name'=>$record['Dataset']['name'])));
+            	   $did = null;
+            	   if ($e_dataset){
+                	   $did = $e_dataset['Dataset']['id'];
+            	   }else{
+            	      $this->Dataset->create();
+            	      $this->Dataset->save($record['Dataset']);
+            	      $did = $this->Dataset->id;
+            	   }   
+            	               	   
+            	   if ($this->Dataset->id){
+                	   foreach ($record['Tag'] as $t){
+                            
+                            
+                            $e_tag = $this->Dataset->Tag->find('first',array('recursive'=>-1,'conditions'=>array('Tag.name'=>$t['name'])));
+                            $tid = null;
+                            if ($e_tag){
+                            	   $tid = $e_tag['Tag']['id'];
+                        	}else{
+                        	      $this->Dataset->Tag->create();
+                        	      $this->Dataset->Tag->save($t);
+                        	      $tid = $this->Dataset->Tag->id;
+                        	}
+                        	$join_record = array('DatasetsTag'=>array('dataset_id'=>$did,'tag_id'=>$tid)); 
+                            $this->Dataset->DatasetsTag->create();
+                            $this->Dataset->DatasetsTag->save($join_record);  	   
+                	   }
+            	   }
+        	   }
+    	    }	
+		}		
+    	$this->redirect(array('controller'=>'datasets','action'=>'getList','pid'=>$pid));
+	}
+	
+	
+	
+	public function getList() {
+
+        $this->layaout = 'ajax';
+	    if (!$this->request->params['named']['pid'] || !$this->Dataset->Project->exists($this->request->params['named']['pid'])) {
+			throw new NotFoundException(__('Invalid project'));
+		}
+	
+	    $pid = $this->request->params['named']['pid'];
+	    $project = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
+	    
+		$this->Dataset->recursive = 1;
+		$this->set('project',$project);
+		$this->set('datasets', $this->Paginator->paginate(array('project_id'=>$pid)));
+		
 	}
 
 /**
