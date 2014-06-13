@@ -24,6 +24,21 @@ class TagsController extends AppController {
 		$this->Tag->recursive = 0;
 		$this->set('tags', $this->Paginator->paginate());
 	}
+	
+	
+	public function getList() {
+
+        $this->layout = 'ajax';
+	
+    
+		$this->Tag->recursive = 1;		
+		$this->Paginator->settings = array(
+            'limit' => 50
+        );
+		$this->set('tag_types',$this->Tag->TagType->find('list',array('order'=>array('name'=>'asc'))));
+		$this->set('tags', $this->Paginator->paginate());
+		
+	}
 
 /**
  * view method
@@ -67,15 +82,18 @@ class TagsController extends AppController {
  * @return void
  */
 	public function edit($id = null) {
+	    $this->layout='ajax';
 		if (!$this->Tag->exists($id)) {
 			throw new NotFoundException(__('Invalid tag'));
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Tag->save($this->request->data)) {
-				$this->Session->setFlash(__('The tag has been saved.'), 'default', array('class' => 'alert alert-success'));
+				/*
+$this->Session->setFlash(__('The tag has been saved.'), 'default', array('class' => 'alert alert-success'));
 				return $this->redirect(array('action' => 'index'));
+*/
 			} else {
-				$this->Session->setFlash(__('The tag could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
+				/* $this->Session->setFlash(__('The tag could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger')); */
 			}
 		} else {
 			$options = array('conditions' => array('Tag.' . $this->Tag->primaryKey => $id));

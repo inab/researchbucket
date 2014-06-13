@@ -18,8 +18,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12  text-default" id="datasets_container">            
-                    
+                 <ul class="nav nav-tabs">
+                  <li class="active"><a href="#name" data-toggle="tab">Dataset Names</a></li>
+                  <li><a href="#tag" data-toggle="tab">Tags</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="name">
+                        <div class="col-md-12  text-default" id="datasets_container"></div>
+                    </div>
+                    <div class="tab-pane active" id="tag">
+                        <div class="col-md-12  text-default" id="tags_container"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,12 +43,22 @@
         }
     });
     
+    
+     $.ajax('<?php echo $this->Html->Url(array('controller'=>'tags','action' => 'getList'));?>', {
+        'async': true,
+        'complete': function(data, textStatus, jqXHR) {
+            
+            $('#tags_container').html(data.responseText);
+        }
+    });
+    
     $('#update_list_trigger').bind('click',function(event){
          event.preventDefault();
+         $('#update_list_trigger').html('Loading, please wait...');
          $.ajax('<?php echo $this->Html->Url(array('controller'=>'datasets','action' => 'updateList','pid'=>$project['Project']['id']));?>', {
             'async': true,
             'complete': function(data, textStatus, jqXHR) {
-                
+                $('#update_list_trigger').html('<?php echo '<i class="fa  fa-refresh"></i> '.__('Update datasets from the sources');?>');
                 $('#datasets_container').html(data.responseText);
             }
         });
