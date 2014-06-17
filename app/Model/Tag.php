@@ -20,6 +20,22 @@ class Tag extends AppModel {
 			'order' => ''
 		)
 	);
+	
+	public $hasMany = array(
+        'DatasetsTag' => array(
+            'className' => 'DatasetsTag',
+            'foreignKey' => 'tag_id',
+            'dependent' => false,
+            'conditions' => '',
+            'fields' => '',
+            'order' => '',
+            'limit' => '',
+            'offset' => '',
+            'exclusive' => '',
+            'finderQuery' => '',
+            'counterQuery' => ''
+        )
+    );  
 
 
 

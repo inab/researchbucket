@@ -51,7 +51,7 @@
             </div>
             <div class="col-md-4 sidebar text-center">
                 <div class="well">
-                    <a class="btn btn-lg btn-default">Explore data</a> <a class="btn btn-lg btn-warning">View results</a>
+                    <a class="btn btn-lg btn-default" href="<?php echo $this->Html->Url(array('controller'=>'datasets','action'=>'exploreDatasets','pid'=>$project['Project']['id']));?>">Explore data</a> <a class="btn btn-lg btn-warning">View results</a>
                 </div>
                 <div style="margin-top:25px;padding-top:50px;" class="well">
                     <div class="chart easyPieChart" data-track-color="#e7e5d9" data-bar-color="#29c26d" data-line-width="20" data-percent="<?php echo ($project['Project']['years'])?($project['Project']['current_year']*100/$project['Project']['years']):0;?>" data-size="200">

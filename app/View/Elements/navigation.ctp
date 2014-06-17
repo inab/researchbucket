@@ -25,6 +25,7 @@
                     <?php if(!$this->Session->read('Auth.User')):?>
                     <li id="menu-item-2524" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2524 dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">My account</a>
                     <ul role="menu" class=" dropdown-menu">
+                    	<li  class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3675"><a href="<?php echo $this->Html->Url(array('controller'=>'tagTypes','action'=>'index'));?>">Metadata attributes</a></li>
                     	<li  class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3675"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'index'));?>">My projects</a></li>
                     </ul>
                     </li>

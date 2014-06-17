@@ -3,6 +3,7 @@
         <div class="container">
             <header class="section-header text-center underline">
                 <h1 class="headline super hairline"><?php echo $project['Project']['name'].' \'s '.__('Datasets');?></h1>
+                <p>Explore the data available</p>
             </header>
         </div>
     </section>
@@ -26,7 +27,7 @@
                     <div class="tab-pane active" id="name">
                         <div class="col-md-12  text-default" id="datasets_container"></div>
                     </div>
-                    <div class="tab-pane active" id="tag">
+                    <div class="tab-pane" id="tag">
                         <div class="col-md-12  text-default" id="tags_container"></div>
                     </div>
                 </div>
@@ -44,7 +45,7 @@
     });
     
     
-     $.ajax('<?php echo $this->Html->Url(array('controller'=>'tags','action' => 'getList'));?>', {
+    $.ajax('<?php echo $this->Html->Url(array('controller'=>'tags','action' => 'getList'));?>', {
         'async': true,
         'complete': function(data, textStatus, jqXHR) {
             

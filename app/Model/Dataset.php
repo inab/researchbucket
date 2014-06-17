@@ -6,9 +6,8 @@ App::uses('AppModel', 'Model');
  * @property Project $Project
  */
 class Dataset extends AppModel {
-
-
-	//The Associations below have been created with all possible keys, those that are not needed can be removed
+    
+  	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 /**
  * belongsTo associations
@@ -80,6 +79,50 @@ class Dataset extends AppModel {
         return $record; 
     
 	}
+	
+	
+	/**
+     * Overridden paginate method - group by week, away_team_id and home_team_id
+     */
+    public function paginate($conditions, $fields, $order, $limit, $page = 1,
+        $recursive = null, $extra = array()) {
+        $recursive = -1;
+
+        
+        if(array_key_exists('Tag.id',$conditions)){
+            debug('here');
+            $results = $this->find('all',array('recursive'=>-1,'conditions'=>array('Dataset.project_id'=>$conditions['Dataset.project_id']),'limit'=>$limit,'page'=>$page,'contain'=>array('Tag'=>array('conditions'=>array('Tag.id'=>$conditions['Tag.id'])))));
+            
+            debug($results);
+            
+        }else{
+           $results = $this->find('all',array('recursive'=>-1,'conditions'=>$conditions,'limit'=>$limit,'page'=>$page,'contain'=>array('Tag'))); 
+        }
+        
+        
+        //debug($results);
+        
+        return $results;
+       
+    }
+    
+    
+    /**
+     * Overridden paginateCount method
+     */
+       public function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
+        
+        if(array_key_exists('Tag.id',$conditions)){
+            $results = $this->find('all',array('recursive'=>-1,'conditions'=>array('Dataset.project_id'=>$conditions['Dataset.project_id']),'contain'=>array('Tag'=>array('conditions'=>array('Tag.id'=>$conditions['Tag.id'])))));
+        }else{
+           debug('here'); 
+           $results = $this->find('all',array('recursive'=>-1,'conditions'=>$conditions)); 
+        }
+        
+        
+           
+        return count($results);
+    }
 	
 	
 

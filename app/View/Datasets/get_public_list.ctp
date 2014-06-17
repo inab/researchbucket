@@ -18,15 +18,17 @@
             <td>
                 <?php 
                     $tags = array();
-                    foreach ($d['Tag'] as $t){
-                        echo '<a href="" class="btn btn-xs btn-link">'.$t['name'].'</a>&nbsp;';
+                    //debug($d);  
+                    foreach ($d['Tag'] as $t){           
+                            echo '<a href="" class="btn btn-xs btn-link">'.str_replace('_',' ',$t['name']).'</a>&nbsp;';
+
                     } 
                     
                 ?>
                 
             </td>
             <td class="actions">
-				<?php echo $this->Form->postLink('<i class="fa fa-trash-o"></i>', array('action' => 'delete', $d['Dataset']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $d['Dataset']['id'])); ?>
+				
 			</td>
         </tr>
         <?php 

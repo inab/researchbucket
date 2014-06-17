@@ -12109,7 +12109,13 @@ blockquote {
 	background:none;
 }
 
-
+.swatch-white-blue  th, .swatch-white-blue th a{
+    color:#FFF!important 
+}
 .swatch-white-blue .tab-pane td, .swatch-white-blue .tab-pane td a{
     color:#6692a6!important 
+}
+select{
+    padding: 6px 12px;
+    font-style: italic;
 }

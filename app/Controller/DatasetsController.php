@@ -37,6 +37,33 @@ class DatasetsController extends AppController {
 	}
 	
 	
+	public function exploreDatasets() {
+
+	    if (!$this->request->params['named']['pid'] || !$this->Dataset->Project->exists($this->request->params['named']['pid'])) {
+			throw new NotFoundException(__('Invalid project'));
+		}
+	
+	    $pid = $this->request->params['named']['pid'];
+	    $project = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
+		$this->set('project',$project);
+		
+		$organisms = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>3)));
+		$this->set('organisms',$organisms);
+		
+		$tissues = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>1)));
+		$this->set('tissues',$tissues);
+		
+		$celltypes = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>4)));
+		$this->set('celltypes',$celltypes);
+		
+		$experiments = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>7)));
+		$this->set('experiments',$experiments);
+
+		
+		
+	}
+	
+	
 	
 	public function updateList(){
 	
@@ -48,15 +75,18 @@ class DatasetsController extends AppController {
 		
 		$project = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
 
-		
+		$datasets = array();
 		foreach ($project['Storage'] as $s){
     	    if($s['url'] && $s['path'] && $s['username'] && $s['password']){
     	    
 
-    	       $files = $this->Storage->scanFtpStorage($s['url'],$s['path'],$s['username'],$s['password']);
+    	       $datasets = $this->Storage->scanFtpStorage($s['url'],$s['path'],$s['username'],$s['password']);
+    	       debug($datasets);
+    	       
         	   
         	   
-        	   foreach($files as $f){
+        	   /*
+foreach($files as $f){
             	   $record = $this->Dataset->annotateFile($f,$pid);
             	   
             	   $e_dataset = $this->Dataset->find('first',array('recursive'=>-1,'conditions'=>array('Dataset.name'=>$record['Dataset']['name'])));
@@ -88,6 +118,7 @@ class DatasetsController extends AppController {
                 	   }
             	   }
         	   }
+*/
     	    }	
 		}		
     	$this->redirect(array('controller'=>'datasets','action'=>'getList','pid'=>$pid));
@@ -108,6 +139,62 @@ class DatasetsController extends AppController {
 		$this->Dataset->recursive = 1;
 		$this->set('project',$project);
 		$this->set('datasets', $this->Paginator->paginate(array('project_id'=>$pid)));
+		
+	}
+	
+	
+	public function getPublicList() {        
+
+
+     
+
+
+        $this->layaout = 'ajax';
+	    if (!$this->request->params['named']['pid'] || !$this->Dataset->Project->exists($this->request->params['named']['pid'])) {
+			throw new NotFoundException(__('Invalid project'));
+		}
+		$pid        = $this->request->params['named']['pid'];
+		$tags       = (isset($this->request->query['tags']))?$this->request->query['tags']:array();
+		
+		$clean_tags = array();
+		$filtered_datasets = array();
+		
+	    $project    = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
+        $clean_tags = array_values(array_filter($tags));
+        
+        
+        $conditions = array();
+        $conditions['Dataset.project_id'] = $pid;
+        
+        if (count($clean_tags)){           
+            $conditions['Tag.id'] = $clean_tags;  
+        }    
+        
+        
+        
+        $datasets  = $this->paginate('Dataset',$conditions);
+        
+        
+        
+        if (count($clean_tags)){               
+            
+            foreach ($datasets as $d){
+                if(count($d['Tag']) == count($clean_tags)){
+                    array_push($filtered_datasets, $d);
+                }   
+            }    
+        }else{
+            $filtered_datasets  = $datasets;  
+        }    
+       
+       
+        
+
+
+        $included = array();
+        
+		$this->set('project',$project);
+		$this->set('datasets', $filtered_datasets);
 		
 	}
 
