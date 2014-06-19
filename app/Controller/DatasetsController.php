@@ -68,6 +68,7 @@ class DatasetsController extends AppController {
 	public function updateList(){
 	
 	    Controller::loadModel('Storage');
+	    Controller::loadModel('TagType');
 	    if (!$this->request->params['named']['pid'] || !$this->Dataset->Project->exists($this->request->params['named']['pid'])) {
 			throw new NotFoundException(__('Invalid project'));
 		}
@@ -80,46 +81,74 @@ class DatasetsController extends AppController {
     	    if($s['url'] && $s['path'] && $s['username'] && $s['password']){
     	    
 
-    	       $datasets = $this->Storage->scanFtpStorage($s['url'],$s['path'],$s['username'],$s['password']);
-    	       debug($datasets);
+    	       $data = $this->Storage->scanFtpStorage($s['url'],$s['path'],$s['username'],$s['password']);
     	       
+    	       //Save new attributes
+    	       foreach ($data['attributes'] as $a){
+        	       
+        	       $this->TagType->set(array('name'=>$a));
+                   if($this->TagType->validates()){
+                      $this->TagType->create(); 
+                      $this->TagType->save(array('name'=>$a)); 
+                   }
+    	       }    	              	   
+        	   $current_tag_types = $this->TagType->find('list');
+        	   $current_tags = $this->Dataset->Tag->find('all',array('fields'=>array('Tag.id','Tag.tag_type_id','Tag.name','TagType.name'),'recursive'=>-1,'contain'=>array('TagType')));
+        	   debug($current_tags); 
         	   
+        	  /*  Save datasets */
+        	  foreach ($data['datasets'] as $d){
+            	  
+            	  // FILE attribute is mandatory 
+                  if(isset($d['FILE']) && isset($d['FILE_MD5']) ){
+                  
+                       $dataset = array('file'=>$d['FILE'],'md5'=>$d['FILE_MD5'],'file_size'=>$d['FILE_SIZE'],'project_id'=>$pid);
+                       
+                       $this->Dataset->set($dataset);
+                       if($this->Dataset->validates()){
+                          $this->Dataset->create(); 
+                          $this->Dataset->save($dataset); 
+                       }
+                       
+                       // Save tags 
+                       if(isset($this->Dataset->id) && $this->Dataset->id){
+                            
+                            $did = $this->Dataset->id;
+                            
+                            foreach ($d as $k=>$v){
+                                
+                                if ($k != 'FILE' && $k != 'FILE_MD5' && $k != 'FILE_SIZE'){
+                                
+                                    $tagkey = null;
+                                    foreach ($current_tags as $ct){
+                                        if ($k == $ct['TagType']['name'] && $v == $ct['Tag']['name']){
+                                            $tagkey = $ct['Tag']['id'];
+                                        }
+                                    }
+                                    
+                                    //Tag already exists create association and go on
+                                    if($tagkey){
+                                        $this->Dataset->DatasetsTag->save(array('dataset_id'=>$did,'tag_id'=>$tagkey));  
+                                    }else{
+                                        
+                                        //Check tagtype
+                                        $tagtype = array_search($k, $current_tag_types);
+                                        if($tagtype){
+                                            
+                                            $this->Dataset->Tag->saveAll(array('Dataset'=>array('id'=>$did),'Tag'=>array('tag_type_id'=>$tagtype,'name'=>$v)));                                       
+                                            array_push($current_tags,array('TagType'=>array('id'=>$tagtype,'name'=>$current_tag_types[$tagtype]),'Tag'=>array('id'=>$this->Dataset->Tag->id,'tag_type_id'=>$tagtype,'name'=>$v)));
+                                        }
+                                        
+                                    }
+                                }
+
+                            }    
+                       }
+                  }
+
+        	  } 
         	   
-        	   /*
-foreach($files as $f){
-            	   $record = $this->Dataset->annotateFile($f,$pid);
-            	   
-            	   $e_dataset = $this->Dataset->find('first',array('recursive'=>-1,'conditions'=>array('Dataset.name'=>$record['Dataset']['name'])));
-            	   $did = null;
-            	   if ($e_dataset){
-                	   $did = $e_dataset['Dataset']['id'];
-            	   }else{
-            	      $this->Dataset->create();
-            	      $this->Dataset->save($record['Dataset']);
-            	      $did = $this->Dataset->id;
-            	   }   
-            	               	   
-            	   if ($this->Dataset->id){
-                	   foreach ($record['Tag'] as $t){
-                            
-                            
-                            $e_tag = $this->Dataset->Tag->find('first',array('recursive'=>-1,'conditions'=>array('Tag.name'=>$t['name'])));
-                            $tid = null;
-                            if ($e_tag){
-                            	   $tid = $e_tag['Tag']['id'];
-                        	}else{
-                        	      $this->Dataset->Tag->create();
-                        	      $this->Dataset->Tag->save($t);
-                        	      $tid = $this->Dataset->Tag->id;
-                        	}
-                        	$join_record = array('DatasetsTag'=>array('dataset_id'=>$did,'tag_id'=>$tid)); 
-                            $this->Dataset->DatasetsTag->create();
-                            $this->Dataset->DatasetsTag->save($join_record);  	   
-                	   }
-            	   }
-        	   }
-*/
-    	    }	
+     	    }	
 		}		
     	$this->redirect(array('controller'=>'datasets','action'=>'getList','pid'=>$pid));
 	}

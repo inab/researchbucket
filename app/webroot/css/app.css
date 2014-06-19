@@ -12119,3 +12119,6 @@ select{
     padding: 6px 12px;
     font-style: italic;
 }
+.cake-debug-output strong{
+    color:#000 !important;
+}

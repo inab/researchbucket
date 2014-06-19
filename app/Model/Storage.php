@@ -37,6 +37,7 @@ class Storage extends AppModel {
         $rawfiles       = ftp_rawlist($conn_id,$base_path,false);
         
         $datasets = array();
+        $attributes = array();
         foreach ($rawfiles as $rawfile)
         {            
             $info = preg_split("/[\s]+/", $rawfile, 9);  
@@ -58,43 +59,69 @@ class Storage extends AppModel {
                 }
             }
         }
-        foreach ($files as $f){
-            $datasets = array_merge($datasets,$this->getDatasets($conn_id,$f));
-        }
         
+        foreach ($files as $f){
+            $result = $this->getDatasets($conn_id,$f);
+                
+                if($result){
+                $attributes = array_merge($attributes,array_values($result['attributes']));
+                
+                $datasets = array_merge($datasets,$result['datasets']);
+            }
+            
+        }
+        //debug($attributes);
         ftp_close($conn_id);
-        return $datasets;
+        return array('attributes'=>array_unique($attributes),'datasets'=>$datasets);
         
 	}
 	
 	private function getDatasets($conn_id,$file){
        
        if (ftp_get($conn_id, TMP.'uploads/'.$file['name'],$file['path'].$file['name'], FTP_BINARY)) {
-       
-        
-            $fh = fopen(TMP.'uploads/'.$file['name'],'r');
+
             $i = 0;
             $attributes = array();
-            while ($line = fgets($fh)) {
+            $rows = array();
+            
+             
+            $input = file_get_contents(TMP.'uploads/'.$file['name']); 
+            
+            $encoding = mb_detect_encoding( $input,'UTF-8',true);
+ 
+            if( $encoding !== "UTF-8" ) {
+                $input = mb_convert_encoding( $input, "UTF-8");
+            }
+
+            foreach( explode( PHP_EOL, $input ) as $line ) {
+
                $data = explode("\t",$line);
                if($i==0){
-                   $attributes = array_merge($attributes,$data);
+                   $attributes  = array_map('strtoupper', $data);
+                   $attributes  = array_map('trim', $attributes);
                }else{
+                   if(isset($data[0])){
                    
+                       /*  Map attributes */
+                       $new_line = array();
+                       foreach($data as $k=>$v){
+                            $new_line[$attributes[$k]]=$v;    
+                       } 
+                       array_push($rows,$new_line);
+                   }
                }
                
                $i++;
                //debug($data);
             }
-            fclose($fh);
+            return array('attributes'=>$attributes,'datasets'=>$rows); 	
             
-            debug(array_unique($attributes)); 
-       
        } else {
-            
+            return null;
        }
-       return array(); 	
+       
 	}
+	
 	
 	
 	

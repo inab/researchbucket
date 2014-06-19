@@ -8,6 +8,10 @@ App::uses('AppModel', 'Model');
 class Dataset extends AppModel {
     
   	//The Associations below have been created with all possible keys, those that are not needed can be removed
+  	public $validate = array(
+        'md5' => 'isUnique'
+    );
+  	
 
 /**
  * belongsTo associations
@@ -115,7 +119,6 @@ class Dataset extends AppModel {
         if(array_key_exists('Tag.id',$conditions)){
             $results = $this->find('all',array('recursive'=>-1,'conditions'=>array('Dataset.project_id'=>$conditions['Dataset.project_id']),'contain'=>array('Tag'=>array('conditions'=>array('Tag.id'=>$conditions['Tag.id'])))));
         }else{
-           debug('here'); 
            $results = $this->find('all',array('recursive'=>-1,'conditions'=>$conditions)); 
         }
         

@@ -2,7 +2,7 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>Name</th>
+            <th>File</th>
             <th>Tags</th>
             <th>Actions</th>
         </tr>
@@ -11,10 +11,12 @@
         <?php
             $i=1; 
             foreach($datasets as $d):
+            $tmp = explode('/',$d['Dataset']['file']);
+                $name = array_pop($tmp);
         ?>
         <tr>
             <td><?php echo $i;?></td>
-            <td><?php echo $this->Html->link($d['Dataset']['name'], array('action' => 'view', $d['Dataset']['id']), array('escape' => false)); ?></td>
+            <td><?php echo $this->Html->link($name, array('action' => 'view', $d['Dataset']['id']), array('escape' => false)); ?></td>
             <td>
                 <?php 
                     $tags = array();
