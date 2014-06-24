@@ -20,12 +20,8 @@
               <li class="active"><?php echo 'datasets';?></li>
             </ol>
             
-            <div class="row" style="margin-bottom:30px;">
+            <div class="row" style="margin-bottom:0px;">
                 <div class="col-md-11">
-                    
-                    <div class="pull-left text-default" style="margin-right:5px;margin-bottom:5px;">
-                        <?php echo  $this->Form->input('organism', array('div'=>false,'label'=>false,'options' => $organisms,'empty' => '(Organism)'));?>
-                    </div>
                     <div class="pull-left  text-default" style="margin-right:5px;margin-bottom:5px;">
                         <?php echo $this->Form->input('donor', array('div'=>false,'label'=>false,'class' => 'form-control', 'placeholder' => 'Donor'));?>
                     </div>
@@ -38,15 +34,25 @@
                     <div class="pull-left" style="margin-right:5px;margin-bottom:5px;">
                         <?php echo  $this->Form->input('cell_type', array('div'=>false,'label'=>false,'options' => $celltypes,'empty' => '(Cell type)'));?>
                     </div>
-                    <div class="pull-left text-default" style="margin-right:5px;margin-bottom:5px;">
-                        <?php echo  $this->Form->input('experiment_type', array('div'=>false,'label'=>false,'options' => $experiments,'empty' => '(Experiment)'));?>
-                    </div>
                     <div class="clearfix"></div>
                 </div> 
                 <div class="col-md-1 text-right">
                     <a href="#" id="filter_trigger" class="btn btn-warning">Filter</a>
                 </div>   
             </div>
+            
+            <div class="row" style="margin-bottom:30px;">
+                <div class="col-md-11">
+                    <div class="pull-left text-default" style="margin-right:5px;margin-bottom:5px;">
+                        <?php echo  $this->Form->input('experiment_type', array('div'=>false,'label'=>false,'options' => $experiments,'empty' => '(Experiment)'));?>
+                    </div>
+                    <div class="pull-left text-default" style="margin-right:5px;margin-bottom:5px;">
+                        <?php echo  $this->Form->input('disease', array('div'=>false,'label'=>false,'options' => $diseases,'empty' => '(Disease)'));?>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>  
+            </div>
+            
             
             
             <div class="row">
@@ -71,7 +77,7 @@
         $(this).html('Loading...');
         $.ajax('<?php echo $this->Html->Url(array('controller'=>'datasets','action' => 'getPublicList','pid'=>$project['Project']['id']));?>', {
         'async': true,
-        'data':{'tags':[$('#organism').val(),$('#tissue').val(),$('#cell_type').val(),$('#experiment_type').val()]},
+        'data':{'tags':[$('#organism').val(),$('#tissue').val(),$('#cell_type').val(),$('#experiment_type').val(),$('#disease').val()]},
         'complete': function(data, textStatus, jqXHR) {
             
             $('#datasets_container').html(data.responseText);

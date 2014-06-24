@@ -50,14 +50,17 @@ class DatasetsController extends AppController {
 		$organisms = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>3)));
 		$this->set('organisms',$organisms);
 		
-		$tissues = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>1)));
+		$tissues = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>26),'order'=>array('Tag.name'=>'asc')));
 		$this->set('tissues',$tissues);
 		
-		$celltypes = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>4)));
+		$celltypes = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>25),'order'=>array('Tag.name'=>'asc')));
 		$this->set('celltypes',$celltypes);
 		
-		$experiments = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>7)));
+		$experiments = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>21),'order'=>array('Tag.name'=>'asc')));
 		$this->set('experiments',$experiments);
+		
+		$diseases = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>22),'order'=>array('Tag.name'=>'asc')));
+		$this->set('diseases',$diseases);
 
 		
 		
@@ -78,11 +81,10 @@ class DatasetsController extends AppController {
 
 		$datasets = array();
 		foreach ($project['Storage'] as $s){
-    	    if($s['url'] && $s['path'] && $s['username'] && $s['password']){
-    	    
+    	    if($s['url'] && $s['path']){
 
-    	       $data = $this->Storage->scanFtpStorage($s['url'],$s['path'],$s['username'],$s['password']);
-    	       
+    	       $data = $this->Storage->scanFtpStorage($s['type'],$s['url'],$s['path'],$s['username'],$s['password']);
+
     	       //Save new attributes
     	       foreach ($data['attributes'] as $a){
         	       
@@ -94,9 +96,9 @@ class DatasetsController extends AppController {
     	       }    	              	   
         	   $current_tag_types = $this->TagType->find('list');
         	   $current_tags = $this->Dataset->Tag->find('all',array('fields'=>array('Tag.id','Tag.tag_type_id','Tag.name','TagType.name'),'recursive'=>-1,'contain'=>array('TagType')));
-        	   debug($current_tags); 
+        	   //debug($current_tags); 
         	   
-        	  /*  Save datasets */
+        	  $n = 0;
         	  foreach ($data['datasets'] as $d){
             	  
             	  // FILE attribute is mandatory 
@@ -120,6 +122,7 @@ class DatasetsController extends AppController {
                                 if ($k != 'FILE' && $k != 'FILE_MD5' && $k != 'FILE_SIZE'){
                                 
                                     $tagkey = null;
+                                    
                                     foreach ($current_tags as $ct){
                                         if ($k == $ct['TagType']['name'] && $v == $ct['Tag']['name']){
                                             $tagkey = $ct['Tag']['id'];
@@ -128,6 +131,7 @@ class DatasetsController extends AppController {
                                     
                                     //Tag already exists create association and go on
                                     if($tagkey){
+                                        $this->Dataset->DatasetsTag->create();
                                         $this->Dataset->DatasetsTag->save(array('dataset_id'=>$did,'tag_id'=>$tagkey));  
                                     }else{
                                         
@@ -145,7 +149,7 @@ class DatasetsController extends AppController {
                             }    
                        }
                   }
-
+                  $n++;
         	  } 
         	   
      	    }	
@@ -161,22 +165,32 @@ class DatasetsController extends AppController {
 	    if (!$this->request->params['named']['pid'] || !$this->Dataset->Project->exists($this->request->params['named']['pid'])) {
 			throw new NotFoundException(__('Invalid project'));
 		}
-	
-	    $pid = $this->request->params['named']['pid'];
-	    $project = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
+	    $pid    = $this->request->params['named']['pid'];
+	    $tags   = (isset($this->request->query['tags']))?$this->request->query['tags']:array();
+
+        $clean_tags = array();
+		$filtered_datasets = array();
 	    
-		$this->Dataset->recursive = 1;
+	    $project = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
+        $clean_tags = array_values(array_filter($tags));
+
+		
+        $conditions = array();
+        $conditions['Dataset.project_id'] = $pid;
+        
+        if (count($clean_tags)){           
+            $conditions['Tag.id'] = $clean_tags;  
+        }    
+        
+        $filtered_datasets  = $this->paginate('Dataset',$conditions); 		
+		
 		$this->set('project',$project);
-		$this->set('datasets', $this->Paginator->paginate(array('project_id'=>$pid)));
+		$this->set('datasets', $filtered_datasets);
 		
 	}
 	
 	
 	public function getPublicList() {        
-
-
-     
-
 
         $this->layaout = 'ajax';
 	    if (!$this->request->params['named']['pid'] || !$this->Dataset->Project->exists($this->request->params['named']['pid'])) {
@@ -190,8 +204,7 @@ class DatasetsController extends AppController {
 		
 	    $project    = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
         $clean_tags = array_values(array_filter($tags));
-        
-        
+                
         $conditions = array();
         $conditions['Dataset.project_id'] = $pid;
         
@@ -199,29 +212,7 @@ class DatasetsController extends AppController {
             $conditions['Tag.id'] = $clean_tags;  
         }    
         
-        
-        
-        $datasets  = $this->paginate('Dataset',$conditions);
-        
-        
-        
-        if (count($clean_tags)){               
-            
-            foreach ($datasets as $d){
-                if(count($d['Tag']) == count($clean_tags)){
-                    array_push($filtered_datasets, $d);
-                }   
-            }    
-        }else{
-            $filtered_datasets  = $datasets;  
-        }    
-       
-       
-        
-
-
-        $included = array();
-        
+        $filtered_datasets  = $this->paginate('Dataset',$conditions);   
 		$this->set('project',$project);
 		$this->set('datasets', $filtered_datasets);
 		

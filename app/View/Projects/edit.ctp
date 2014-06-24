@@ -87,7 +87,7 @@
                           <?php echo $this->Form->input('Storage.'.$i.'.password', array('div'=>false,'label'=>false,'class' => 'form-control', 'placeholder' => 'Password'));?>
                       </div>
                       <div class="col-md-2">
-                          <?php echo  $this->Form->input('Storage.'.$i.'.type', array('div'=>false,'label'=>false,'options' => array('FTP'),'default'=>'FTP','empty' => '(choose one)'));?>
+                          <?php echo  $this->Form->input('Storage.'.$i.'.type', array('div'=>false,'label'=>false,'options' => array('FTP','SFTP'),'default'=>'FTP','empty' => '(choose one)'));?>
                       </div>
                   </div>   
                   <?php endfor;?>

@@ -88,24 +88,21 @@ class Dataset extends AppModel {
 	/**
      * Overridden paginate method - group by week, away_team_id and home_team_id
      */
-    public function paginate($conditions, $fields, $order, $limit, $page = 1,
-        $recursive = null, $extra = array()) {
+    public function paginate($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
         $recursive = -1;
-
+        $results = array();
         
         if(array_key_exists('Tag.id',$conditions)){
-            debug('here');
-            $results = $this->find('all',array('recursive'=>-1,'conditions'=>array('Dataset.project_id'=>$conditions['Dataset.project_id']),'limit'=>$limit,'page'=>$page,'contain'=>array('Tag'=>array('conditions'=>array('Tag.id'=>$conditions['Tag.id'])))));
-            
-            debug($results);
+                       
+            $results = $this->query('SELECT d.id,d.file,GROUP_CONCAT(t.name) as tags FROM datasets d, datasets_tags dt, tags t WHERE d.id = dt.dataset_id AND t.id = dt.tag_id AND  dt.tag_id IN('.implode(',',$conditions['Tag.id']).') AND d.project_id='.$conditions['Dataset.project_id'].' GROUP BY d.id HAVING COUNT(DISTINCT dt.tag_id) = '.count($conditions['Tag.id']).' LIMIT '.$limit);
             
         }else{
-           $results = $this->find('all',array('recursive'=>-1,'conditions'=>$conditions,'limit'=>$limit,'page'=>$page,'contain'=>array('Tag'))); 
+        
+            $results = $this->query('SELECT d.id,d.file,GROUP_CONCAT(t.name) as tags FROM datasets d, datasets_tags dt,tags t WHERE d.id = dt.dataset_id AND t.id = dt.tag_id AND d.project_id='.$conditions['Dataset.project_id'].' GROUP BY d.id LIMIT '.$limit);
+
         }
-        
-        
         //debug($results);
-        
+
         return $results;
        
     }
@@ -116,15 +113,16 @@ class Dataset extends AppModel {
      */
        public function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
         
+        $results = array();
+        
         if(array_key_exists('Tag.id',$conditions)){
-            $results = $this->find('all',array('recursive'=>-1,'conditions'=>array('Dataset.project_id'=>$conditions['Dataset.project_id']),'contain'=>array('Tag'=>array('conditions'=>array('Tag.id'=>$conditions['Tag.id'])))));
+            
+            $results = $this->query('SELECT count(*) as count FROM datasets d, datasets_tags dt,tags t WHERE d.id = dt.dataset_id AND t.id = dt.tag_id AND dt.tag_id IN('.implode(',',$conditions['Tag.id']).') AND d.project_id='.$conditions['Dataset.project_id'].' GROUP BY d.id HAVING COUNT(DISTINCT dt.tag_id) = '.count($conditions['Tag.id']));
+            
         }else{
-           $results = $this->find('all',array('recursive'=>-1,'conditions'=>$conditions)); 
+           $results = $this->query('SELECT count(*) as count FROM datasets d, datasets_tags dt,tags t WHERE d.id = dt.dataset_id AND t.id = dt.tag_id AND d.project_id='.$conditions['Dataset.project_id']);
         }
-        
-        
-           
-        return count($results);
+        return $results[0][0]['count'];
     }
 	
 	

@@ -20,8 +20,6 @@
                     <li class="active"><a title="Home" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'home'));?>"><?php echo __('Home');?></a></li>
                     <li><a title="How it works?" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'howitworks'));?>"><?php echo __('How it works?');?></a></li>
                     <li><a title="Projects" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'projects'));?>"><?php echo __('Projects');?></a></li>
-                    <li><a title="Datasets" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'datasets'));?>"><?php echo __('Datasets');?></a></li>
-                    <li><a title="Results" href="#"><?php echo __('Results');?></a></li>
                     <?php if(!$this->Session->read('Auth.User')):?>
                     <li id="menu-item-2524" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2524 dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">My account</a>
                     <ul role="menu" class=" dropdown-menu">

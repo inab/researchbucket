@@ -11,21 +11,24 @@
         <?php
             $i=1; 
             foreach($datasets as $d):
-            $tmp = explode('/',$d['Dataset']['file']);
+            //debug($d);
+            $tmp = explode('/',$d['d']['file']);
                 $name = array_pop($tmp);
         ?>
         <tr>
             <td><?php echo $i;?></td>
-            <td><?php echo $this->Html->link($name, array('action' => 'view', $d['Dataset']['id']), array('escape' => false)); ?></td>
+            <td><?php echo $this->Html->link($name, array('action' => 'view', $d['d']['id']), array('escape' => false)); ?></td>
             <td>
                 <?php 
-                    $tags = array();
-                    //debug($d);  
-                    foreach ($d['Tag'] as $t){           
-                            echo '<a href="" class="btn btn-xs btn-link">'.str_replace('_',' ',$t['name']).'</a>&nbsp;';
-
-                    } 
-                    
+                    if (isset($d[0]['tags'])){
+                        $tags = explode(',',$d[0]['tags']); 
+                        foreach ($tags as $t){    
+                                if($t != '-'){       
+                                    echo '<a href="" class="btn btn-xs btn-link">'.$t.'</a>&nbsp;';
+                                }
+    
+                        }   
+                    }                    
                 ?>
                 
             </td>

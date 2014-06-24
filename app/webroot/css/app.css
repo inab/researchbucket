@@ -41,7 +41,7 @@ blockquote {
     margin-bottom: 0px;
 }
 .tab-content{
-    background: #FFF!important;
+    background: transparent!important;
 }
 .swatch-white-blue .tab-content{
     border:1px solid #dbe7ed;
@@ -8185,7 +8185,7 @@ blockquote {
 
 .swatch-beige-black .dropdown-menu a:hover,[class*="swatch-"] .swatch-beige-black .dropdown-menu a:hover,.swatch-beige-black .dropdown-menu > .active > a,[class*="swatch-"] .swatch-beige-black .dropdown-menu > .active > a,.swatch-beige-black .dropdown-menu > .active > a:hover,[class*="swatch-"] .swatch-beige-black .dropdown-menu > .active > a:hover,.swatch-beige-black .dropdown-menu > .active > a:focus,[class*="swatch-"] .swatch-beige-black .dropdown-menu > .active > a:focus {
 	background:#1c1e20;
-	color:#e7e5d9;
+	color:#FFF!important;
 }
 
 .swatch-beige-black .dropdown-menu a:hover i,[class*="swatch-"] .swatch-beige-black .dropdown-menu a:hover i,.swatch-beige-black .dropdown-menu > .active > a i,[class*="swatch-"] .swatch-beige-black .dropdown-menu > .active > a i,.swatch-beige-black .dropdown-menu > .active > a:hover i,[class*="swatch-"] .swatch-beige-black .dropdown-menu > .active > a:hover i,.swatch-beige-black .dropdown-menu > .active > a:focus i,[class*="swatch-"] .swatch-beige-black .dropdown-menu > .active > a:focus i {
@@ -12122,3 +12122,46 @@ select{
 .cake-debug-output strong{
     color:#000 !important;
 }
+.section-short {
+    padding: 40px 0;
+}
+@media (min-width: 1200px){
+    .container {
+        width: 1200px;
+    }
+}
+.breadcrumb {
+padding: 8px 15px;
+margin-bottom: 24px;
+list-style: none;
+background-color: transparent;
+border-radius: 0px;
+}
+.inner-color .box-inner {
+background: #e74c3c !important;
+}
+.btn-warning {
+background: #e74c3c!important;
+color: #fff!important;
+}
+
+
+table.qlabs_grid_container {
+width: 100%;
+max-width: 1200px;
+height: 100%;
+border-collapse: collapse;
+position: relative;
+margin-left: auto;
+margin-right: auto;
+line-height: normal !important;
+font-family: arial, sans-serif !important;
+font-size: 12px !important;
+background: #ffffff;
+border: 1px solid #c5c5c5;
+color: #444444 !important;
+-webkit-box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.05);
+-moz-box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.05);
+box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.05);
+}
+genomicVariants

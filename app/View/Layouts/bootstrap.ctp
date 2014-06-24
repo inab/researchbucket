@@ -20,6 +20,11 @@
         
         <?php echo $this->Html->css('typekit');?>
         <?php echo $this->Html->css('theme');?>
+        <?php echo $this->Html->css('nv.d3');?>
+        <?php echo $this->Html->css('d3-components');?>
+        <?php echo $this->Html->css('data_grids_main');?>
+        <?php echo $this->Html->css('data_grids_tooltip');?>
+        <?php echo $this->Html->css('data_grids_style_01');?>
         <?php echo $this->Html->css('app');?>
         <!--[if lt IE 9]>
         <?php echo $this->Html->script('ltIE9');?>
@@ -40,7 +45,12 @@
         
         <?php echo $this->Html->script('/components/isotope/dist/isotope.pkgd.min');?>  
         <?php echo $this->Html->script('map');?> 
-        <?php echo $this->Html->script('theme');?> 
+        <?php echo $this->Html->script('theme');?>
+        <?php echo $this->Html->script('selectivizr');?>
+        <?php echo $this->Html->script('d3.min');?>
+        <?php echo $this->Html->script('nv.d3.min');?>
+        
+      
     </head>
 
   <body>
@@ -50,6 +60,22 @@
 			<?php echo $this->Session->flash(); ?>
 			<?php echo $this->fetch('content'); ?>
     </div>
+    <footer id="footer" role="contentinfo">
+        <section class="section section-normal has-top swatch-black-beige">
+                <div class="decor-top">
+<svg class="decor" height="100%" preserveAspectRatio="none" version="1.1" viewBox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 100 L100 0 L100 100" stroke-width="0"></path>
+</svg>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">	
+                            <div class="textwidget">RESEARCHBUCKET</div>
+                        </div> 
+                   </div>
+                </div>
+            </section>
+    </footer>
     <a href="javascript:void(0)" class="go-top hex-alt" style="bottom: -44px; opacity: 0;"><i class="fa fa-angle-up"></i></a>
   </body>
 </html>

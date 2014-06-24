@@ -116,3 +116,5 @@ Configure::write('Opauth.Strategy.LinkedIn', array(
    'secret_key' => 'u9hag421JnOt49b8',
    'scope' => 'r_fullprofile r_emailaddress r_network rw_nus'
 ));
+set_include_path(get_include_path() . PATH_SEPARATOR . CAKE_CORE_INCLUDE_PATH.'/phpseclib');
+include('Net/SFTP.php');

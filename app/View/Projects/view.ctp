@@ -77,13 +77,24 @@
                         </div>    
                     </div>
                     <div class="post-body">
-                        <?php echo $project['Project']['description'];?>
+                        <?php echo str_replace("\n","<br>",$project['Project']['description']);?>
                     </div>
                 </article>
             </div>
             <div class="col-md-4 sidebar text-center">
                 <div class="well">
-                    <a class="btn btn-lg btn-default" href="<?php echo $this->Html->Url(array('controller'=>'datasets','action'=>'exploreDatasets','pid'=>$project['Project']['id']));?>">Explore data</a> <a class="btn btn-lg btn-warning">View results</a>
+                    <a class="btn btn-lg btn-default" href="<?php echo $this->Html->Url(array('controller'=>'datasets','action'=>'exploreDatasets','pid'=>$project['Project']['id']));?>">Explore data</a> 
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-lg btn-warning">View results</button>
+                      <button type="button" class="btn btn-lg btn-warning dropdown-toggle" data-toggle="dropdown">
+                        <span class="caret"></span>
+                        <span class="sr-only">Toggle Dropdown</span>
+                      </button>
+                      <ul class="dropdown-menu" role="menu">
+                        <li><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'toolGenomicVariants',$project['Project']['id']));?>">Genomic Variants Explorer</a></li>
+                      </ul>
+                    </div>
+
                 </div>
                 <?php if ($project['Project']['youtube']):?>
                 <div id="player" class="player">

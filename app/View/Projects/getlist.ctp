@@ -14,7 +14,7 @@
             </div>
             <?php endif;?>
             <div class="post-head small-screen-center">
-                <h2 class="post-title"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'view',$p['Project']['id']));?>" title="<?php echo $p['Project']['name'];?>" rel="bookmark"><?php echo $p['Project']['name'];?></a></h2><small class="post-date"><?php echo $this->Time->nice($p['Project']['created']);?></small>
+                <h2 class="post-title"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'view',$p['Project']['id']));?>" title="<?php echo $p['Project']['name'];?>" rel="bookmark"><?php echo $p['Project']['name'];?></a></h2><small class="post-date"><?php echo $p['Project']['tagline'];?></small>
                 <div class="post-icon">
                     <div class="hex hex-big"><i class="fa fa-bookmark"></i></div>
                 </div>

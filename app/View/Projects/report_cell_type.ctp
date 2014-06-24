@@ -25,12 +25,48 @@
         
         
         <div class="row">
-            <div class="col-md-8">
-                
+            <div class="col-md-3">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs nav-stacked">
+                  <?php 
+                    $i=0;
+                    foreach ($cell_types as $c):
+                  ?>
+                  <?php if($c['t']['name'] != '-'):?>
+                  <li class="<?php echo ($i==0)?'active':'';?>"><a href="#cell_type_<?php echo $c['t']['id'];?>" data-toggle="tab"><?php echo $c['t']['name'];?></a></li>
+                  <?php endif;?>
+                  <?php 
+                     $i++;
+                     endforeach;
+                  ?> 
+                </ul>       
             </div>
-            <div class="col-md-4 sidebar text-center">
-                
+            <div class="col-md-9 sidebar text-center">
+                <div class="tab-content">
+                   <?php 
+                    $i=0;
+                    foreach ($cell_types as $c):
+                  ?>
+                  <?php if($c['t']['name'] != '-'):?>
+                  <div id="cell_type_<?php echo $c['t']['id'];?>" class="tab-pane <?php echo ($i==0)?'active':'';?>"></div>
+                  <?php endif;?>
+                  <?php 
+                     $i++;
+                     endforeach;
+                  ?> 
+                </div>
             </div>
         </div>
     </div>
 </section>
+<script>
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.ajax({url:'<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'reportContentCellType',$project['Project']['id']));?>',
+                data:{'cell_type':$(e.target).attr('href')},
+                success:function(data,message){
+                    $($(e.target).attr('href')).html(data);
+                }
+            
+        });
+    })
+</script>
