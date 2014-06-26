@@ -60,4 +60,35 @@ class Tag extends AppModel {
 		)
 	);
 
+
+    /**
+     * Overridden paginate method - group by week, away_team_id and home_team_id
+     */
+    public function paginate($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
+        $recursive = -1;
+        $results = array();
+        
+                      
+        $results = $this->query('select * from tags t, datasets_tags dt, datasets d where t.id = dt.tag_id and d.id = dt.dataset_id and d.project_id = 2 and t.name != "-" ORDER BY t.tag_type_id LIMIT '.(($page*$limit)-$limit).', '.$limit);
+
+        //debug($results);
+
+        return $results;
+       
+    }
+    
+    
+    /**
+     * Overridden paginateCount method
+     */
+       public function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
+        
+        $results = array();
+        
+        $results = $this->query('select count(*) as count from tags t, datasets_tags dt, datasets d where t.id = dt.tag_id and d.id = dt.dataset_id and d.project_id =2 and t.name != "-"');
+
+        return $results[0][0]['count'];
+    }
+
+
 }

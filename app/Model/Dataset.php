@@ -94,7 +94,7 @@ class Dataset extends AppModel {
         
         if(array_key_exists('Tag.id',$conditions)){
                        
-            $results = $this->query('SELECT d.id,d.file,GROUP_CONCAT(t.name) as tags FROM datasets d, datasets_tags dt, tags t WHERE d.id = dt.dataset_id AND t.id = dt.tag_id AND  dt.tag_id IN('.implode(',',$conditions['Tag.id']).') AND d.project_id='.$conditions['Dataset.project_id'].' GROUP BY d.id HAVING COUNT(DISTINCT dt.tag_id) = '.count($conditions['Tag.id']).' LIMIT '.$limit);
+            $results = $this->query('SELECT d.id,d.file,GROUP_CONCAT(t.name) as tags FROM datasets d, datasets_tags dt, tags t WHERE d.id = dt.dataset_id AND t.id = dt.tag_id AND  dt.tag_id IN('.implode(',',$conditions['Tag.id']).') AND d.project_id='.$conditions['Dataset.project_id'].' GROUP BY d.id HAVING COUNT(DISTINCT dt.tag_id) = '.count($conditions['Tag.id']).' LIMIT '.(($page*$limit)-$limit).', '.$limit);
             
         }else{
         

@@ -60,6 +60,8 @@ class TagTypesController extends AppController {
 				$this->Session->setFlash(__('The tag type could not be saved. Please, try again.'), 'default', array('class' => 'alert alert-danger'));
 			}
 		}
+		$vocabularies = $this->TagType->Vocabulary->find('list');
+		$this->set('vocabularies',$vocabularies);
 	}
 
 /**
@@ -84,6 +86,8 @@ class TagTypesController extends AppController {
 			$options = array('conditions' => array('TagType.' . $this->TagType->primaryKey => $id));
 			$this->request->data = $this->TagType->find('first', $options);
 		}
+        $vocabularies = $this->TagType->Vocabulary->find('list');
+		$this->set('vocabularies',$vocabularies);
 	}
 
 /**

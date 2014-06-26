@@ -28,7 +28,12 @@ class ProjectsController extends AppController {
  
     public function index() {
 		$this->Project->recursive = -1;
-		$this->set('projects', $this->Paginator->paginate());
+		$conditions = array();
+		if(Configure::read('demomode')=='rdconnect'){
+    		$conditions = array('Project.id'=>array(2,4,5));
+		}
+		
+		$this->set('projects', $this->Paginator->paginate($conditions));
 	}
  
  

@@ -10,6 +10,16 @@ class TagType extends AppModel {
         'name' => 'isUnique'
     );
     
+    public $belongsTo = array(
+		'Vocabulary' => array(
+			'className' => 'Vocabulary',
+			'foreignKey' => 'vocabulary_id',
+			'conditions' => '',
+			'fields' => '',
+			'order' => ''
+		)
+	);
+    
     
     public $hasMany = array(
         'Tags' => array(

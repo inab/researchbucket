@@ -2,16 +2,15 @@
     <section class="section section-short swatch-blue-white">
         <div class="container">
             <header class="section-header text-center underline">
-                <h1 class="headline super hairline"><?php echo __('Metadata Attributes');?></h1>
+                <h1 class="headline super hairline"><?php echo __('Vocabularies');?></h1>
             </header>
         </div>
     </section>
-    
     <section class="section section-short swatch-white-blue">
         <div class="container">
             <div class="row" style="margin-bottom:20px;">
                 <div class="col-md-12 text-right">
-                    <?php echo $this->Html->link('<i class="fa fa-plus"></i> '.__('New Attribute'), array('controller' => 'tagTypes', 'action' => 'add'), array('class'=>'btn btn-warning','escape' => false)); ?>
+                    <?php echo $this->Html->link('<i class="fa fa-plus"></i> '.__('New Vocabulary'), array('controller' => 'vocabularies', 'action' => 'add'), array('class'=>'btn btn-warning','escape' => false)); ?>
                 </div>
             </div>
             <div class="row">
@@ -19,23 +18,22 @@
                     <table cellpadding="0" cellspacing="0" class="table table-striped">
         				<thead>
         					<tr>
-        						<th><?php echo $this->Paginator->sort('id'); ?></th>
         						<th><?php echo $this->Paginator->sort('name'); ?></th>
-        						<th><?php echo $this->Paginator->sort('vocabulary'); ?></th>
-          						<th class="actions"></th>
+              						<th><?php echo $this->Paginator->sort('url'); ?></th>
+        						<th><?php echo $this->Paginator->sort('is_ontology'); ?></th>
+        						<th class="actions"></th>
         					</tr>
         				</thead>
         				<tbody>
-        				<?php foreach ($tagTypes as $tagType): ?>
+        				<?php foreach ($vocabularies as $vocabulary): ?>
         					<tr>
-        						<td><?php echo h($tagType['TagType']['id']); ?>&nbsp;</td>
-        						<td><?php echo h($tagType['TagType']['name']); ?>&nbsp;</td>
-        						<td><?php echo h($tagType['Vocabulary']['name']); ?>&nbsp;</td>
-        						
+        						<td><?php echo h($vocabulary['Vocabulary']['name']); ?>&nbsp;</td>
+        						<td><?php echo h($vocabulary['Vocabulary']['url']); ?>&nbsp;</td>
+        						<td><?php echo h($vocabulary['Vocabulary']['is_ontology']); ?>&nbsp;</td>
         						<td class="actions">
-        							<?php echo $this->Html->link('<i class="fa fa-search"></i>', array('action' => 'view', $tagType['TagType']['id']), array('escape' => false)); ?>
-        							<?php echo $this->Html->link('<i class="fa fa-edit"></i>', array('action' => 'edit', $tagType['TagType']['id']), array('escape' => false)); ?>
-        							<?php echo $this->Form->postLink('<i class="fa fa-trash-o"></i>', array('action' => 'delete', $tagType['TagType']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $tagType['TagType']['id'])); ?>
+        							<?php echo $this->Html->link('<i class="fa fa-search"></i>', array('action' => 'view', $vocabulary['Vocabulary']['id']), array('escape' => false)); ?>
+        							<?php echo $this->Html->link('<i class="fa fa-edit"></i></span>', array('action' => 'edit', $vocabulary['Vocabulary']['id']), array('escape' => false)); ?>
+        							<?php echo $this->Form->postLink('<i class="fa fa-trash-o"></i>', array('action' => 'delete', $vocabulary['Vocabulary']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $vocabulary['Vocabulary']['id'])); ?>
         						</td>
         					</tr>
         				<?php endforeach; ?>

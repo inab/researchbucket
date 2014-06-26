@@ -34,6 +34,21 @@ class DatasetsController extends AppController {
 	    $pid = $this->request->params['named']['pid'];
 	    $project = $this->Dataset->Project->find('first',array('conditions'=>array('id'=>$pid)));
 		$this->set('project',$project);
+		
+		$organisms = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>3)));
+		$this->set('organisms',$organisms);
+		
+		$tissues = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>26),'order'=>array('Tag.name'=>'asc')));
+		$this->set('tissues',$tissues);
+		
+		$celltypes = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>25),'order'=>array('Tag.name'=>'asc')));
+		$this->set('celltypes',$celltypes);
+		
+		$experiments = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>21),'order'=>array('Tag.name'=>'asc')));
+		$this->set('experiments',$experiments);
+		
+		$diseases = $this->Dataset->Tag->find('list',array('conditions'=>array('Tag.tag_type_id'=>22),'order'=>array('Tag.name'=>'asc')));
+		$this->set('diseases',$diseases);
 	}
 	
 	

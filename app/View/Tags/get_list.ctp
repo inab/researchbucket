@@ -15,16 +15,16 @@
         ?>
         <tr>
             <td><?php echo $i;?></td>
-            <td><?php echo $this->Html->link($t['Tag']['name'], array('action' => 'view', $t['Tag']['id']), array('class'=>'btn btn-xs btn-link','escape' => false)); ?></td>
+            <td><?php echo $this->Html->link($t['t']['name'], array('action' => 'view', $t['t']['id']), array('class'=>'btn btn-xs btn-link','escape' => false)); ?></td>
             <td>
-                <?php echo $this->Form->create('Tag',array('url'=>array('controller'=>'tags','action'=>'edit',$t['Tag']['id'])),array('role' => 'form')); ?>
-                <?php echo $this->Form->hidden('id',array('value'=>$t['Tag']['id']));?>
-                <?php echo $this->Form->input('tag_type_id', array('div'=>false,'label'=>false,'options' => $tag_types,'selected'=>$t['Tag']['tag_type_id'],'empty' => '(choose one)','onchange'=>'submitForm(this)'));?>
+                <?php echo $this->Form->create('Tag',array('url'=>array('controller'=>'tags','action'=>'edit',$t['t']['id'])),array('role' => 'form')); ?>
+                <?php echo $this->Form->hidden('id',array('value'=>$t['t']['id']));?>
+                <?php echo $this->Form->input('tag_type_id', array('div'=>false,'label'=>false,'options' => $tag_types,'selected'=>$t['t']['tag_type_id'],'empty' => '(choose one)','onchange'=>'submitForm(this)'));?>
                 <?php echo $this->Form->end() ?>
             </td>
-            <td><?php echo count($t['Dataset']);?></td>
+            <td><?php echo count($t['d']);?></td>
             <td class="actions">
-				<?php echo $this->Form->postLink('<i class="fa fa-trash-o"></i>', array('action' => 'delete', $t['Tag']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $t['Tag']['id'])); ?>
+				<?php echo $this->Form->postLink('<i class="fa fa-trash-o"></i>', array('action' => 'delete', $t['t']['id']), array('escape' => false), __('Are you sure you want to delete # %s?', $t['t']['id'])); ?>
 			</td>
         </tr>
         <?php 

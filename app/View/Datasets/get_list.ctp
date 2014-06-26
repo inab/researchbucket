@@ -22,9 +22,10 @@
                 <?php 
                     if (isset($d[0]['tags'])){
                         $tags = explode(',',$d[0]['tags']); 
-                        foreach ($tags as $t){           
+                        foreach ($tags as $t){  
+                            if($t != '-'){            
                                 echo '<a href="" class="btn btn-xs btn-link">'.$t.'</a>&nbsp;';
-    
+                            }
                         }   
                     }                    
                 ?>

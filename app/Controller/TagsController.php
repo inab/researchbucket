@@ -33,7 +33,8 @@ class TagsController extends AppController {
     
 		$this->Tag->recursive = 1;		
 		$this->Paginator->settings = array(
-            'limit' => 20
+            'limit' => 20,
+            'order' => array('tag_type_id'=>'ASC')
         );
 		$this->set('tag_types',$this->Tag->TagType->find('list',array('order'=>array('name'=>'asc'))));
 		$this->set('tags', $this->Paginator->paginate());
