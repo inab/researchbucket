@@ -176,8 +176,6 @@ class Storage extends AppModel {
 	}
 	
 	
-	
-	
 	private function _fileAnnotator($base_path,$path,$file){
 	    
         $fileRecord = array();   

@@ -17,7 +17,7 @@ class Project extends AppModel {
                 'thumbnailSizes' => array(
                         'xvga' => '1024x768',
                         'vga' => '848w',
-                        'thumb' => '360x180'
+                        'thumb' => '370x180'
                 ),
                 'thumbnailMethod' => 'php'
             )

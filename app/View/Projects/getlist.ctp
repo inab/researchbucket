@@ -1,15 +1,15 @@
 <?php foreach ($projects as $p):?>
 <div class="infinite-item col-md-4 filter-news filter-web-design">
-    <div class="grid-post swatch-black-beige">
+    <div class="grid-post swatch-<?php echo Configure::read('swatch1');?>">
         <article id="project-<?php echo $p['Project']['id'];?>" class="post-showinfo">
             <?php if ($p['Project']['youtube']):?>
             <div id="player" class="player">
-                <iframe width="360" height="203" src="//www.youtube.com/embed/<?php echo $p['Project']['youtube'];?>?rel=0" frameborder="0" allowfullscreen></iframe>
+                <iframe width="370" height="203" src="//www.youtube.com/embed/<?php echo $p['Project']['youtube'];?>?rel=0" frameborder="0" allowfullscreen></iframe>
             </div>
             <?php else:?>
             <div class="post-media overlay">
                 <a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'view',$p['Project']['id']));?>" class="feature-image hover-animate">
-                    <img src="<?php echo $this->webroot.'files/project/image/'.$p['Project']['image_dir'].'/thumb_'.$p['Project']['image'];?>" alt="">
+                    <img src="<?php echo $this->webroot.'files/project/image/'.$p['Project']['image_dir'].'/thumb_'.$p['Project']['image'];?>" alt="" width="370">
                 </a>
             </div>
             <?php endif;?>

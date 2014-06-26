@@ -36,16 +36,27 @@ class ProjectsController extends AppController {
 	public function getlist() {
 	    $this->layout = 'ajax';
 		$this->Project->recursive = -1;
-		$this->set('projects', $this->Paginator->paginate());
+		$conditions = array();
+		if(Configure::read('demomode')=='rdconnect'){
+    		$conditions = array('Project.id'=>array(2,4,5));
+		}
+		
+		$this->set('projects', $this->Paginator->paginate($conditions));
 	}
 	
 	public function toolGenomicVariants($id=null){
     	
+    	Controller::loadModel('Dlatmr');
     	if (!$this->Project->exists($id)) {
 			throw new NotFoundException(__('Invalid project'));
 		}
 		$project = $this->Project->find('first',array('recursive'=>-1,'conditions'=>array('id'=>$id)));
 		$this->set('project',$project);
+		
+		
+        $all = $this->Dlatmr->find('all');
+		
+		debug($all);
 	}
 	
 	

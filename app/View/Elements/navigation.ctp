@@ -1,7 +1,7 @@
-<header class="navbar navbar-fixed-top text-caps swatch-black-beige" id="masthead" role="banner">
+<header class="navbar navbar-fixed-top text-caps swatch-<?php echo Configure::read('swatch1');?>" id="masthead" role="banner">
     <div class="container">
         <div class="navbar-header">
-            <button class="navbar-toggle collapsed" data-target=".main-navbar" data-toggle="collapse" data-original-title="" title=""></button> <a href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'home'));?>" class="navbar-brand"><img src="<?php echo $this->webroot;?>images/researchbucket.png" alt="Researchbucket">Researchbucket</a>
+            <button class="navbar-toggle collapsed" data-target=".main-navbar" data-toggle="collapse" data-original-title="" title=""></button> <a href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'home'));?>" class="navbar-brand"><img src="<?php echo $this->webroot;?>images/researchbucket.png" alt="Researchbucket"><?php echo Configure::read('platform.name');?></a>
         </div>
 
         <nav class="collapse navbar-collapse main-navbar" role="navigation">

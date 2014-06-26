@@ -1,5 +1,5 @@
 <article>
-    <section class="section section-short swatch-black-beige">
+    <section class="section section-short swatch-<?php echo Configure::read('swatch1');?>">
         <div class="container">
             <header class="section-header text-center underline">
                 <h1 class="headline super hairline"><?php echo $project['Project']['name'].' \'s '.__('Datasets');?></h1>
@@ -7,7 +7,7 @@
             </header>
         </div>
     </section>
-    <section class="section section-short  has-top  swatch-beige-black">
+    <section class="section section-short  has-top  swatch-<?php echo Configure::read('swatch2');?>">
         <div class="decor-top">
             <svg class="decor" height="100%" preserveAspectRatio="none" version="1.1" viewBox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 0 L100 100 L0 100" stroke-width="0"></path>

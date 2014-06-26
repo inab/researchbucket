@@ -1,10 +1,11 @@
 {
 	"config": {
-		"vendor-dir": "Vendor"
+		"vendor-dir": "Vendor",
+		 "minimum-stability": "alpha"
 	},
 	"require": {
 		 "josegonzalez/cakephp-upload": "1.0.0",
 		 "uzyn/cakephp-opauth": "*",
-	     "opauth/linkedin": "*"	 
+	     "opauth/linkedin": "*" 
 	}
 }

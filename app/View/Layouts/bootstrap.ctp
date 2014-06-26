@@ -61,16 +61,16 @@
 			<?php echo $this->fetch('content'); ?>
     </div>
     <footer id="footer" role="contentinfo">
-        <section class="section section-normal has-top swatch-black-beige">
+        <section class="section section-normal has-top swatch-<?php echo Configure::read('swatch1');?>">
                 <div class="decor-top">
-<svg class="decor" height="100%" preserveAspectRatio="none" version="1.1" viewBox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
-  <path d="M0 100 L100 0 L100 100" stroke-width="0"></path>
-</svg>
+                <svg class="decor" height="100%" preserveAspectRatio="none" version="1.1" viewBox="0 0 100 100" width="100%" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 100 L100 0 L100 100" stroke-width="0"></path>
+                </svg>
                 </div>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">	
-                            <div class="textwidget">RESEARCHBUCKET</div>
+                            <div class="textwidget"><?php echo Configure::read('platform.name');?></div>
                         </div> 
                    </div>
                 </div>

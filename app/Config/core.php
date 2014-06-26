@@ -33,6 +33,15 @@ require_once dirname(__DIR__) . '/Vendor/autoload.php';
  * In development mode, you need to click the flash message to continue.
  */
 	Configure::write('debug', 2);
+	Configure::write('demomode', 'rdconnect');
+	Configure::write('platform.name', 'RD-connect');
+	Configure::write('platform.tagline', 'An integrated platform connecting databases, registries, biobanks and clinical bioinformatics for rare disease research');
+	
+	//Available options black-beige, green-white, blue-white, black-yellow, red-wuite
+	Configure::write('swatch1','black-beige');
+	Configure::write('swatch2','beige-black');
+	
+	
 
 /**
  * Configure the Error handler used to handle errors for your application. By default
