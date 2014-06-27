@@ -26,6 +26,7 @@
                     	<li  class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3675"><a href="<?php echo $this->Html->Url(array('controller'=>'vocabularies','action'=>'index'));?>"><?php echo __('Vocabularies');?></a></li>
                     	<li  class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3675"><a href="<?php echo $this->Html->Url(array('controller'=>'tagTypes','action'=>'index'));?>">Metadata attributes</a></li>
                     	<li  class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3675"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'index'));?>">My projects</a></li>
+                    	<li  class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3675"><a href="<?php echo $this->Html->Url(array('controller'=>'users','action'=>'logout'));?>">Logout</a></li>
                     </ul>
                     </li>
                     <?php else:?> 

@@ -21,10 +21,10 @@ class UsersController extends AppController {
     	
     	$user = $this->User->linkedin_signin($this->data);
     	if($user){
-    	    $this->Session->setFlash('You have successfully logged in',array('class' => 'alert alert-success'));
+    	    $this->Session->setFlash('You have successfully logged in','default',array('class' => 'alert alert-success'));
         	$this->Auth->login($user);
     	}else{
-    	    $this->Session->setFlash('Some error occurred',array('class' => 'alert alert-error'));
+    	    $this->Session->setFlash('Some error occurred','default',array('class' => 'alert alert-error'));
     	}
         $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));	
     }
@@ -33,6 +33,13 @@ class UsersController extends AppController {
         $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
     }
 	
+	
+	public function logout(){
+        if($this->Auth->logout($this->data)){
+            $this->redirect(array('controller' => 'pages', 'action' => 'display', 'home'));
+
+        }
+    }
 
 /**
  * index method
