@@ -25,28 +25,28 @@
                     </div>
                     <div class="col-md-2">
                         <div class="box-wrap"><div class="box-round box-medium"><div class="box-dummy"></div><span class="box-inner"><i class="fa  fa-flask animated" data-animation=""></i></span></div></div>
-                        <div class="counter underline" data-count="<?php echo (isset($kpis) && count($kpis))?$kpis['EXPERIMENT_TYPE']:0;?>">
+                        <div class="counter underline" data-count="<?php echo (isset($kpis['EXPERIMENT_TYPE']) && $kpis['EXPERIMENT_TYPE'])?$kpis['EXPERIMENT_TYPE']:0;?>">
                             <span class="value super hairline odometer odometer-auto-theme"></span>
                         </div>
                         <h3 class="text-center normal light no-bordered-header"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'reportExperiment',$project['Project']['id']));?>"><?php echo __('Experiment types');?> <i class="fa fa-search" style="font-size:14px;"></i></a></h3>
                     </div>
                     <div class="col-md-2">
                         <div class="box-wrap"><div class="box-round box-medium"><div class="box-dummy"></div><span class="box-inner"><i class="fa fa-group animated" data-animation=""></i></span></div></div>
-                        <div class="counter underline" data-count="<?php echo (isset($kpis) && count($kpis))?$kpis['DONOR_ID']:0;?>">
+                        <div class="counter underline" data-count="<?php echo (isset($kpis['DONOR_ID']) && $kpis['DONOR_ID'])?$kpis['DONOR_ID']:0;?>">
                             <span class="value super hairline odometer odometer-auto-theme"></span>
                         </div>
                         <h3 class="text-center normal light no-bordered-header"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'reportDonor',$project['Project']['id']));?>"><?php echo __('Donors');?> <i class="fa fa-search" style="font-size:14px;"></i></a></h3>
                     </div>
                     <div class="col-md-2">
                         <div class="box-wrap"><div class="box-round box-medium"><div class="box-dummy"></div><span class="box-inner"><i class="fa fa-barcode animated" data-animation=""></i></span></div></div>
-                        <div class="counter underline" data-count="<?php echo (isset($kpis) && count($kpis))?$kpis['SAMPLE_ID']:0;?>">
+                        <div class="counter underline" data-count="<?php echo (isset($kpis['SAMPLE_ID']) && $kpis['SAMPLE_ID'])?$kpis['SAMPLE_ID']:0;?>">
                             <span class="value super hairline odometer odometer-auto-theme"></span>
                         </div>
                         <h3 class="text-center normal light no-bordered-header"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'reportSample',$project['Project']['id']));?>"><?php echo __('Samples');?> <i class="fa fa-search" style="font-size:14px;"></i></a></h3>
                     </div>
                     <div class="col-md-2">
                         <div class="box-wrap"><div class="box-round box-medium"><div class="box-dummy"></div><span class="box-inner"><i class="fa fa-male animated" data-animation=""></i></span></div></div>
-                        <div class="counter underline" data-count="<?php echo (isset($kpis) && count($kpis))?$kpis['TISSUE']:0;?>">
+                        <div class="counter underline" data-count="<?php echo (isset($kpis['TISSUE']) && $kpis['TISSUE'])?$kpis['TISSUE']:0;?>">
                             <span class="value super hairline odometer odometer-auto-theme"></span>
                         </div>
                         <h3 class="text-center normal light no-bordered-header"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'reportTissue',$project['Project']['id']));?>"><?php echo __('Tissues');?> <i class="fa fa-search" style="font-size:14px;"></i></a></h3>
@@ -54,7 +54,7 @@
                     <?php if(Configure::read('demomode') == 'blueprint'):?>
                     <div class="col-md-2">
                         <div class="box-wrap"><div class="box-round box-medium"><div class="box-dummy"></div><span class="box-inner"><i class="fa fa-sitemap animated" data-animation=""></i></span></div></div>
-                        <div class="counter underline" data-count="<?php echo (isset($kpis) && count($kpis))?$kpis['CELL_TYPE']:0;?>">
+                        <div class="counter underline" data-count="<?php echo (isset($kpis['CELL_TYPE']) && $kpis['CELL_TYPE'])?$kpis['CELL_TYPE']:0;?>">
                             <span class="value super hairline odometer odometer-auto-theme"></span>
                         </div>
                         <h3 class="text-center normal light no-bordered-header"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'reportCellType',$project['Project']['id']));?>"><?php echo __('Cell types');?> <i class="fa fa-search" style="font-size:14px;"></i></a></h3>
