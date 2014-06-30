@@ -395,3 +395,5 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
+/* Elasticsearch resource */
+Configure::write('elasticsearch','http://localhost:9200');

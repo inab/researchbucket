@@ -39,7 +39,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="box-wrap"><div class="box-round box-medium"><div class="box-dummy"></div><span class="box-inner"><i class="fa fa-barcode animated" data-animation=""></i></span></div></div>
-                        <div class="counter underline" data-count="<?php echo (isset($kpis['SAMPLE_ID']) && $kpis['SAMPLE_ID'])?$kpis['SAMPLE_ID']:0;?>">
+                        <div class="counter underline" data-count="<?php echo (isset($kpis['SAMPLE_NAME']) && $kpis['SAMPLE_NAME'])?$kpis['SAMPLE_NAME']:0;?>">
                             <span class="value super hairline odometer odometer-auto-theme"></span>
                         </div>
                         <h3 class="text-center normal light no-bordered-header"><a href="<?php echo $this->Html->Url(array('controller'=>'projects','action'=>'reportSample',$project['Project']['id']));?>"><?php echo __('Samples');?> <i class="fa fa-search" style="font-size:14px;"></i></a></h3>

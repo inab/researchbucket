@@ -78,4 +78,9 @@
     </footer>
     <a href="javascript:void(0)" class="go-top hex-alt" style="bottom: -44px; opacity: 0;"><i class="fa fa-angle-up"></i></a>
   </body>
+  <script>
+      $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+      })
+  </script>
 </html>

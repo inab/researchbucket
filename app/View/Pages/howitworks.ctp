@@ -18,7 +18,7 @@
 
                             <div class="col-md-9">
                                 <h2 class="bordered-header small-screen-center"><?php echo __('You tell us where your data is stored');?></h2>
-                                <p class="text-left"><?php echo __('In your organization or research project you must designate a person who will be responsible about keeping your project datasets updated. This person will notify us trough the interface which are the main data repositories from where your data will be pulled.');?></p>
+                                <p class="text-left"><?php echo __('In your organization or research project you must designate a person who will be responsible about keeping your project datasets updated. This person will notify us through the interface which are the main data repositories from where your data will be pulled.');?></p>
                             </div>
                         </li>
 
@@ -48,7 +48,7 @@
                             <div class="col-md-9">
                                 <h2 class="bordered-header small-screen-center"><?php echo __('Curators validate the data and prepare the data release');?></h2>
 
-                                <p class="text-left"><?php echo __('Trough the admin interface curators explore the metadata, fix possible errors, validate metadata against controller vocabularies and ontologies and prepare the data to be released.');?></p>
+                                <p class="text-left"><?php echo __('Through the admin interface curators explore the metadata, fix possible errors, validate metadata against controller vocabularies and ontologies and prepare the data to be released.');?></p>
                             </div>
                         </li>
 

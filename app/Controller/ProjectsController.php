@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('HttpSocket', 'Network/Http');
 /**
  * Projects Controller
  *
@@ -51,24 +52,34 @@ class ProjectsController extends AppController {
 	
 	public function toolGenomicVariants($id=null){
     	
-    	Controller::loadModel('Dlatmr');
     	if (!$this->Project->exists($id)) {
 			throw new NotFoundException(__('Invalid project'));
 		}
 		$project = $this->Project->find('first',array('recursive'=>-1,'conditions'=>array('id'=>$id)));
 		$this->set('project',$project);
-		
-		
-        $all = $this->Dlatmr->find('all');
-		
-		debug($all);
 	}
 	
 	
 	public function getGenomicVariantExperiments($id) {
 	    $this->layout = 'ajax';
-		$datasets = $this->Project->Dataset->find('all',array('recursive'=>-1,'conditions'=>array('project_id'=>$id),'contain'=>array('Tag'=>array('conditions'=>array('Tag.id'=>14)))));
-		$this->set('genomicVariantExperiments',count($datasets));
+        $elastic_search_endpoint = Configure::read('elasticsearch');
+        $ElasticSearchSocket = new HttpSocket();
+
+        if(isset($this->request->query['snp']) && $this->request->query['snp']){
+            $response = $ElasticSearchSocket->GET($elastic_search_endpoint.'/primary/ssm.p/_search?size=50&q='.$this->request->query['snp']);
+        }else{
+             $response = $ElasticSearchSocket->GET($elastic_search_endpoint.'/primary/ssm.p/_search?size=50');     
+        }
+        
+        
+       
+        $results = json_decode($response->body);
+        
+        $variants = $results->hits->hits;
+        $total = $results->hits->total;
+
+        $this->set('variants',$variants); 
+        $this->set('total',$total); 
 	}
 
 /**
