@@ -20,7 +20,7 @@
                     <li class="active"><a title="Home" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'home'));?>"><?php echo __('Home');?></a></li>
                     <li><a title="How it works?" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'howitworks'));?>"><?php echo __('How it works?');?></a></li>
                     <li><a title="Projects" href="<?php echo $this->Html->Url(array('controller'=>'pages','action'=>'projects'));?>"><?php echo __('Projects');?></a></li>
-                    <?php if(!$this->Session->read('Auth.User')):?>
+                    <?php if($this->Session->read('Auth.User')):?>
                     <li id="menu-item-2524" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-2524 dropdown"><a href="#" data-toggle="dropdown" class="dropdown-toggle">My account</a>
                     <ul role="menu" class=" dropdown-menu">
                     	<li  class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3675"><a href="<?php echo $this->Html->Url(array('controller'=>'vocabularies','action'=>'index'));?>"><?php echo __('Vocabularies');?></a></li>
